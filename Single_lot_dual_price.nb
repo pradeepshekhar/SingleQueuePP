@@ -1,0 +1,774 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     25180,        766]
+NotebookOptionsPosition[     24455,        737]
+NotebookOutlinePosition[     24813,        753]
+CellTagsIndexPosition[     24770,        750]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{
+   RowBox[{"Single", " ", "Lot"}], ",", " ", 
+   RowBox[{"Dual", " ", "Price"}]}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.705256721584228*^9, 3.705256727296709*^9}, {
+  3.7053433967259893`*^9, 3.7053434063267403`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Calculate", " ", "what", " ", "expected", " ", "parking", " ", "cost", 
+    " ", "is", " ", "for", " ", "each", " ", "type"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"PCost", "[", "t", "]"}], " ", "=", " ", 
+     RowBox[{"Piecewise", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", 
+          RowBox[{"t", "<", "0"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           SubscriptBox["P", "1"], "t"}], ",", " ", 
+          RowBox[{"0", "\[LessEqual]", " ", "t", "<", "W"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            SubscriptBox["P", "1"], "W"}], " ", "+", " ", 
+           RowBox[{
+            SubscriptBox["P", "2"], 
+            RowBox[{"(", 
+             RowBox[{"t", "-", "W"}], ")"}]}]}], ",", " ", 
+          RowBox[{"t", " ", "\[GreaterEqual]", " ", "W"}]}], "}"}]}], "}"}], 
+      "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Pdf1", "[", "t", "]"}], " ", "=", " ", 
+     RowBox[{"Piecewise", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", " ", 
+          RowBox[{"t", "<", "0"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           SubscriptBox["\[Mu]", "1"], 
+           SuperscriptBox["\[ExponentialE]", 
+            RowBox[{
+             RowBox[{"-", 
+              SubscriptBox["\[Mu]", "1"]}], "t"}]]}], ",", " ", 
+          RowBox[{"t", " ", "\[GreaterEqual]", " ", "0"}]}], "}"}]}], "}"}], 
+      "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Pdf2", "[", "t", "]"}], " ", "=", " ", 
+     RowBox[{"Piecewise", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", " ", 
+          RowBox[{"t", "<", "0"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           SubscriptBox["\[Mu]", "2"], 
+           SuperscriptBox["\[ExponentialE]", 
+            RowBox[{
+             RowBox[{"-", 
+              SubscriptBox["\[Mu]", "2"]}], "t"}]]}], ",", " ", 
+          RowBox[{"t", " ", "\[GreaterEqual]", " ", "0"}]}], "}"}]}], "}"}], 
+      "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"expCost1", " ", "=", " ", 
+    RowBox[{"Integrate", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"PCost", "[", "t", "]"}], "*", 
+       RowBox[{"Pdf1", "[", "t", "]"}]}], ",", 
+      RowBox[{"{", 
+       RowBox[{"t", ",", " ", "0", ",", " ", "\[Infinity]"}], "}"}], ",", " ", 
+      RowBox[{"Assumptions", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"W", ">", "0"}], ",", " ", 
+         RowBox[{
+          SubscriptBox["\[Mu]", "1"], ">", "0"}]}], "}"}]}]}], "]"}]}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"expCost2", " ", "=", " ", 
+    RowBox[{"Integrate", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"PCost", "[", "t", "]"}], "*", 
+       RowBox[{"Pdf2", "[", "t", "]"}]}], ",", 
+      RowBox[{"{", 
+       RowBox[{"t", ",", " ", "0", ",", " ", "\[Infinity]"}], "}"}], ",", " ", 
+      RowBox[{"Assumptions", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"W", ">", "0"}], ",", " ", 
+         RowBox[{
+          SubscriptBox["\[Mu]", "2"], ">", "0"}]}], "}"}]}]}], "]"}]}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.7053434019521008`*^9, 3.705343418057138*^9}, {
+  3.705343570926219*^9, 3.7053436930977497`*^9}, {3.7053437308283663`*^9, 
+  3.70534375314569*^9}, {3.705343833479012*^9, 3.705343971689951*^9}, {
+  3.70534404550273*^9, 3.705344087811636*^9}, {3.705344416211322*^9, 
+  3.705344416367972*^9}}],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   SuperscriptBox["\[ExponentialE]", 
+    RowBox[{
+     RowBox[{"-", "W"}], " ", 
+     SubscriptBox["\[Mu]", "1"]}]], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"-", 
+      SubscriptBox["P", "1"]}], "+", 
+     RowBox[{
+      SuperscriptBox["\[ExponentialE]", 
+       RowBox[{"W", " ", 
+        SubscriptBox["\[Mu]", "1"]}]], " ", 
+      SubscriptBox["P", "1"]}], "+", 
+     SubscriptBox["P", "2"]}], ")"}]}], 
+  SubscriptBox["\[Mu]", "1"]]], "Output",
+ CellChangeTimes->{
+  3.705344001930361*^9, {3.7053440685693703`*^9, 3.705344089834916*^9}, 
+   3.705344417915204*^9}],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   SuperscriptBox["\[ExponentialE]", 
+    RowBox[{
+     RowBox[{"-", "W"}], " ", 
+     SubscriptBox["\[Mu]", "2"]}]], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"-", 
+      SubscriptBox["P", "1"]}], "+", 
+     RowBox[{
+      SuperscriptBox["\[ExponentialE]", 
+       RowBox[{"W", " ", 
+        SubscriptBox["\[Mu]", "2"]}]], " ", 
+      SubscriptBox["P", "1"]}], "+", 
+     SubscriptBox["P", "2"]}], ")"}]}], 
+  SubscriptBox["\[Mu]", "2"]]], "Output",
+ CellChangeTimes->{
+  3.705344001930361*^9, {3.7053440685693703`*^9, 3.705344089834916*^9}, 
+   3.705344418935678*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "To", " ", "find", " ", "price", " ", "to", " ", "achieve", " ", 
+     "balking", " ", "rates", " ", 
+     SubscriptBox["n", "1"], " ", "and", " ", 
+     SubscriptBox["n", "2"]}], ",", " ", 
+    RowBox[{
+    "set", " ", "the", " ", "expected", " ", "price", " ", "equal", " ", "to",
+      " ", "expected", " ", "utility", " ", 
+     RowBox[{"(", 
+      RowBox[{"including", " ", "waiting"}], ")"}], " ", "for", " ", "each", 
+     " ", "type"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      SubscriptBox["R", "1"], "-", 
+      FractionBox[
+       RowBox[{
+        SubscriptBox["C", "w"], 
+        RowBox[{"(", 
+         RowBox[{
+          SubscriptBox["n", "1"], "-", "c"}], ")"}]}], 
+       RowBox[{"c", " ", 
+        OverscriptBox["\[Mu]", "~"]}]]}], " ", "\[Equal]", " ", "expCost1"}], 
+    ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      SubscriptBox["R", "2"], "-", 
+      FractionBox[
+       RowBox[{
+        SubscriptBox["C", "w"], 
+        RowBox[{"(", 
+         RowBox[{
+          SubscriptBox["n", "2"], "-", "c"}], ")"}]}], 
+       RowBox[{"c", " ", 
+        OverscriptBox["\[Mu]", "~"]}]]}], " ", "\[Equal]", " ", "expCost2"}], 
+    ";"}], "\[IndentingNewLine]", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         SubscriptBox["R", "1"], "-", 
+         FractionBox[
+          RowBox[{
+           SubscriptBox["C", "w"], 
+           RowBox[{"(", 
+            RowBox[{
+             SubscriptBox["n", "1"], "-", "c"}], ")"}]}], 
+          RowBox[{"c", " ", 
+           OverscriptBox["\[Mu]", "~"]}]]}], " ", "\[Equal]", " ", 
+        "expCost1"}], ",", " ", 
+       RowBox[{
+        RowBox[{
+         SubscriptBox["R", "2"], "-", 
+         FractionBox[
+          RowBox[{
+           SubscriptBox["C", "w"], 
+           RowBox[{"(", 
+            RowBox[{
+             SubscriptBox["n", "2"], "-", "c"}], ")"}]}], 
+          RowBox[{"c", " ", 
+           OverscriptBox["\[Mu]", "~"]}]]}], " ", "\[Equal]", " ", 
+        "expCost2"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       SubscriptBox["P", "1"], ",", 
+       SubscriptBox["P", "2"]}], "}"}]}], "]"}], "\[IndentingNewLine]", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       SubscriptBox["R", "2"], "-", 
+       FractionBox[
+        RowBox[{
+         SubscriptBox["C", "w"], 
+         RowBox[{"(", 
+          RowBox[{
+           SubscriptBox["n", "2"], "-", "c"}], ")"}]}], 
+        RowBox[{"c", " ", 
+         OverscriptBox["\[Mu]", "~"]}]]}], " ", "\[Equal]", " ", "expCost2"}],
+      ",", 
+     SubscriptBox["P", "2"]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.705344207993292*^9, 3.705344477308923*^9}, {
+  3.705345133491558*^9, 3.705345140916123*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{
+     SubscriptBox["P", "1"], "\[Rule]", 
+     RowBox[{"-", 
+      FractionBox[
+       RowBox[{
+        RowBox[{"-", 
+         FractionBox[
+          RowBox[{
+           SuperscriptBox["\[ExponentialE]", 
+            RowBox[{
+             RowBox[{"-", "W"}], " ", 
+             SubscriptBox["\[Mu]", "1"]}]], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", 
+              FractionBox[
+               RowBox[{
+                SubscriptBox["C", "w"], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", "c"}], "+", 
+                  SubscriptBox["n", "2"]}], ")"}]}], 
+               RowBox[{"c", " ", 
+                OverscriptBox["\[Mu]", "~"]}]]}], "+", 
+             SubscriptBox["R", "2"]}], ")"}]}], 
+          SubscriptBox["\[Mu]", "1"]]}], "+", 
+        FractionBox[
+         RowBox[{
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{
+            RowBox[{"-", "W"}], " ", 
+            SubscriptBox["\[Mu]", "2"]}]], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", 
+             FractionBox[
+              RowBox[{
+               SubscriptBox["C", "w"], " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "c"}], "+", 
+                 SubscriptBox["n", "1"]}], ")"}]}], 
+              RowBox[{"c", " ", 
+               OverscriptBox["\[Mu]", "~"]}]]}], "+", 
+            SubscriptBox["R", "1"]}], ")"}]}], 
+         SubscriptBox["\[Mu]", "2"]]}], 
+       RowBox[{
+        FractionBox[
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           RowBox[{"-", "W"}], " ", 
+           SubscriptBox["\[Mu]", "1"]}]], 
+         RowBox[{
+          SubscriptBox["\[Mu]", "1"], " ", 
+          SubscriptBox["\[Mu]", "2"]}]], "-", 
+        FractionBox[
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           RowBox[{"-", "W"}], " ", 
+           SubscriptBox["\[Mu]", "2"]}]], 
+         RowBox[{
+          SubscriptBox["\[Mu]", "1"], " ", 
+          SubscriptBox["\[Mu]", "2"]}]]}]]}]}], ",", 
+    RowBox[{
+     SubscriptBox["P", "2"], "\[Rule]", 
+     RowBox[{"-", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{"c", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           SuperscriptBox["\[ExponentialE]", 
+            RowBox[{"W", " ", 
+             SubscriptBox["\[Mu]", "1"]}]], "-", 
+           SuperscriptBox["\[ExponentialE]", 
+            RowBox[{"W", " ", 
+             SubscriptBox["\[Mu]", "2"]}]]}], ")"}], " ", 
+         OverscriptBox["\[Mu]", "~"]}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "c"}], " ", 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"W", " ", 
+            SubscriptBox["\[Mu]", "1"]}]], " ", 
+          SubscriptBox["C", "w"], " ", 
+          SubscriptBox["\[Mu]", "1"]}], "+", 
+         RowBox[{"c", " ", 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{
+            RowBox[{"W", " ", 
+             SubscriptBox["\[Mu]", "1"]}], "+", 
+            RowBox[{"W", " ", 
+             SubscriptBox["\[Mu]", "2"]}]}]], " ", 
+          SubscriptBox["C", "w"], " ", 
+          SubscriptBox["\[Mu]", "1"]}], "+", 
+         RowBox[{
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"W", " ", 
+            SubscriptBox["\[Mu]", "1"]}]], " ", 
+          SubscriptBox["C", "w"], " ", 
+          SubscriptBox["n", "1"], " ", 
+          SubscriptBox["\[Mu]", "1"]}], "-", 
+         RowBox[{
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{
+            RowBox[{"W", " ", 
+             SubscriptBox["\[Mu]", "1"]}], "+", 
+            RowBox[{"W", " ", 
+             SubscriptBox["\[Mu]", "2"]}]}]], " ", 
+          SubscriptBox["C", "w"], " ", 
+          SubscriptBox["n", "1"], " ", 
+          SubscriptBox["\[Mu]", "1"]}], "-", 
+         RowBox[{"c", " ", 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"W", " ", 
+            SubscriptBox["\[Mu]", "1"]}]], " ", 
+          OverscriptBox["\[Mu]", "~"], " ", 
+          SubscriptBox["R", "1"], " ", 
+          SubscriptBox["\[Mu]", "1"]}], "+", 
+         RowBox[{"c", " ", 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{
+            RowBox[{"W", " ", 
+             SubscriptBox["\[Mu]", "1"]}], "+", 
+            RowBox[{"W", " ", 
+             SubscriptBox["\[Mu]", "2"]}]}]], " ", 
+          OverscriptBox["\[Mu]", "~"], " ", 
+          SubscriptBox["R", "1"], " ", 
+          SubscriptBox["\[Mu]", "1"]}], "+", 
+         RowBox[{"c", " ", 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"W", " ", 
+            SubscriptBox["\[Mu]", "2"]}]], " ", 
+          SubscriptBox["C", "w"], " ", 
+          SubscriptBox["\[Mu]", "2"]}], "-", 
+         RowBox[{"c", " ", 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{
+            RowBox[{"W", " ", 
+             SubscriptBox["\[Mu]", "1"]}], "+", 
+            RowBox[{"W", " ", 
+             SubscriptBox["\[Mu]", "2"]}]}]], " ", 
+          SubscriptBox["C", "w"], " ", 
+          SubscriptBox["\[Mu]", "2"]}], "-", 
+         RowBox[{
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"W", " ", 
+            SubscriptBox["\[Mu]", "2"]}]], " ", 
+          SubscriptBox["C", "w"], " ", 
+          SubscriptBox["n", "2"], " ", 
+          SubscriptBox["\[Mu]", "2"]}], "+", 
+         RowBox[{
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{
+            RowBox[{"W", " ", 
+             SubscriptBox["\[Mu]", "1"]}], "+", 
+            RowBox[{"W", " ", 
+             SubscriptBox["\[Mu]", "2"]}]}]], " ", 
+          SubscriptBox["C", "w"], " ", 
+          SubscriptBox["n", "2"], " ", 
+          SubscriptBox["\[Mu]", "2"]}], "+", 
+         RowBox[{"c", " ", 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"W", " ", 
+            SubscriptBox["\[Mu]", "2"]}]], " ", 
+          OverscriptBox["\[Mu]", "~"], " ", 
+          SubscriptBox["R", "2"], " ", 
+          SubscriptBox["\[Mu]", "2"]}], "-", 
+         RowBox[{"c", " ", 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{
+            RowBox[{"W", " ", 
+             SubscriptBox["\[Mu]", "1"]}], "+", 
+            RowBox[{"W", " ", 
+             SubscriptBox["\[Mu]", "2"]}]}]], " ", 
+          OverscriptBox["\[Mu]", "~"], " ", 
+          SubscriptBox["R", "2"], " ", 
+          SubscriptBox["\[Mu]", "2"]}]}], ")"}]}]}]}]}], "}"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.705344423558722*^9, 3.70534442613763*^9}, 
+   3.705344478689979*^9, 3.705345141383802*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    SubscriptBox["P", "2"], "\[Rule]", 
+    RowBox[{"-", 
+     FractionBox[
+      RowBox[{
+       RowBox[{
+        RowBox[{"-", "c"}], " ", 
+        OverscriptBox["\[Mu]", "~"], " ", 
+        SubscriptBox["P", "1"]}], "+", 
+       RowBox[{"c", " ", 
+        SuperscriptBox["\[ExponentialE]", 
+         RowBox[{"W", " ", 
+          SubscriptBox["\[Mu]", "2"]}]], " ", 
+        OverscriptBox["\[Mu]", "~"], " ", 
+        SubscriptBox["P", "1"]}], "-", 
+       RowBox[{"c", " ", 
+        SuperscriptBox["\[ExponentialE]", 
+         RowBox[{"W", " ", 
+          SubscriptBox["\[Mu]", "2"]}]], " ", 
+        SubscriptBox["C", "w"], " ", 
+        SubscriptBox["\[Mu]", "2"]}], "+", 
+       RowBox[{
+        SuperscriptBox["\[ExponentialE]", 
+         RowBox[{"W", " ", 
+          SubscriptBox["\[Mu]", "2"]}]], " ", 
+        SubscriptBox["C", "w"], " ", 
+        SubscriptBox["n", "2"], " ", 
+        SubscriptBox["\[Mu]", "2"]}], "-", 
+       RowBox[{"c", " ", 
+        SuperscriptBox["\[ExponentialE]", 
+         RowBox[{"W", " ", 
+          SubscriptBox["\[Mu]", "2"]}]], " ", 
+        OverscriptBox["\[Mu]", "~"], " ", 
+        SubscriptBox["R", "2"], " ", 
+        SubscriptBox["\[Mu]", "2"]}]}], 
+      RowBox[{"c", " ", 
+       OverscriptBox["\[Mu]", "~"]}]]}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{{3.705344423558722*^9, 3.70534442613763*^9}, 
+   3.705344478689979*^9, 3.7053451413874807`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Use", " ", "this", " ", "one", " ", "for", " ", "P1"}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{"-", 
+      FractionBox[
+       RowBox[{
+        RowBox[{"-", 
+         FractionBox[
+          RowBox[{
+           SuperscriptBox["\[ExponentialE]", 
+            RowBox[{
+             RowBox[{"-", "W"}], " ", 
+             SubscriptBox["\[Mu]", "1"]}]], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", 
+              FractionBox[
+               RowBox[{
+                SubscriptBox["C", "w"], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", "c"}], "+", 
+                  SubscriptBox["n", "2"]}], ")"}]}], 
+               RowBox[{"c", " ", 
+                OverscriptBox["\[Mu]", "~"]}]]}], "+", 
+             SubscriptBox["R", "2"]}], ")"}]}], 
+          SubscriptBox["\[Mu]", "1"]]}], "+", 
+        FractionBox[
+         RowBox[{
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{
+            RowBox[{"-", "W"}], " ", 
+            SubscriptBox["\[Mu]", "2"]}]], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", 
+             FractionBox[
+              RowBox[{
+               SubscriptBox["C", "w"], " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "c"}], "+", 
+                 SubscriptBox["n", "1"]}], ")"}]}], 
+              RowBox[{"c", " ", 
+               OverscriptBox["\[Mu]", "~"]}]]}], "+", 
+            SubscriptBox["R", "1"]}], ")"}]}], 
+         SubscriptBox["\[Mu]", "2"]]}], 
+       RowBox[{
+        FractionBox[
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           RowBox[{"-", "W"}], " ", 
+           SubscriptBox["\[Mu]", "1"]}]], 
+         RowBox[{
+          SubscriptBox["\[Mu]", "1"], " ", 
+          SubscriptBox["\[Mu]", "2"]}]], "-", 
+        FractionBox[
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           RowBox[{"-", "W"}], " ", 
+           SubscriptBox["\[Mu]", "2"]}]], 
+         RowBox[{
+          SubscriptBox["\[Mu]", "1"], " ", 
+          SubscriptBox["\[Mu]", "2"]}]]}]]}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        SubscriptBox["C", "w"], ">", "0"}], ",", " ", 
+       RowBox[{"W", ">", "0"}], ",", " ", 
+       RowBox[{
+        SubscriptBox["\[Mu]", "1"], ">", "0"}], ",", " ", 
+       RowBox[{
+        SubscriptBox["\[Mu]", "2"], ">", "0"}], ",", " ", 
+       RowBox[{
+        SubscriptBox["n", "1"], "\[GreaterEqual]", " ", "c"}], ",", " ", 
+       RowBox[{
+        SubscriptBox["n", "2"], "\[GreaterEqual]", " ", "c"}], ",", " ", 
+       RowBox[{
+        OverscriptBox["\[Mu]", "~"], ">", "0"}]}], "}"}]}], "]"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Use", " ", "this", " ", "one", " ", "for", " ", "P2"}], ",", 
+     " ", 
+     RowBox[{"using", " ", "P1"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       RowBox[{
+        RowBox[{"-", "c"}], " ", 
+        OverscriptBox["\[Mu]", "~"], " ", 
+        SubscriptBox["P", "1"]}], "+", 
+       RowBox[{"c", " ", 
+        SuperscriptBox["\[ExponentialE]", 
+         RowBox[{"W", " ", 
+          SubscriptBox["\[Mu]", "2"]}]], " ", 
+        OverscriptBox["\[Mu]", "~"], " ", 
+        SubscriptBox["P", "1"]}], "-", 
+       RowBox[{"c", " ", 
+        SuperscriptBox["\[ExponentialE]", 
+         RowBox[{"W", " ", 
+          SubscriptBox["\[Mu]", "2"]}]], " ", 
+        SubscriptBox["C", "w"], " ", 
+        SubscriptBox["\[Mu]", "2"]}], "+", 
+       RowBox[{
+        SuperscriptBox["\[ExponentialE]", 
+         RowBox[{"W", " ", 
+          SubscriptBox["\[Mu]", "2"]}]], " ", 
+        SubscriptBox["C", "w"], " ", 
+        SubscriptBox["n", "2"], " ", 
+        SubscriptBox["\[Mu]", "2"]}], "-", 
+       RowBox[{"c", " ", 
+        SuperscriptBox["\[ExponentialE]", 
+         RowBox[{"W", " ", 
+          SubscriptBox["\[Mu]", "2"]}]], " ", 
+        OverscriptBox["\[Mu]", "~"], " ", 
+        SubscriptBox["R", "2"], " ", 
+        SubscriptBox["\[Mu]", "2"]}]}], 
+      RowBox[{"c", " ", 
+       OverscriptBox["\[Mu]", "~"]}]], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        SubscriptBox["C", "w"], ">", "0"}], ",", " ", 
+       RowBox[{"W", ">", "0"}], ",", " ", 
+       RowBox[{
+        SubscriptBox["\[Mu]", "1"], ">", "0"}], ",", " ", 
+       RowBox[{
+        SubscriptBox["\[Mu]", "2"], ">", "0"}], ",", " ", 
+       RowBox[{
+        SubscriptBox["n", "1"], "\[GreaterEqual]", " ", "c"}], ",", " ", 
+       RowBox[{
+        SubscriptBox["n", "2"], "\[GreaterEqual]", " ", "c"}], ",", " ", 
+       RowBox[{
+        OverscriptBox["\[Mu]", "~"], ">", "0"}]}], "}"}]}], "]"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.7053444933814287`*^9, 3.705344583082857*^9}, {
+  3.705345151326468*^9, 3.705345163660585*^9}, {3.7053552964739847`*^9, 
+  3.70535529695959*^9}, {3.705355471860804*^9, 3.705355492910963*^9}}],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   RowBox[{
+    SuperscriptBox["\[ExponentialE]", 
+     RowBox[{"W", " ", 
+      SubscriptBox["\[Mu]", "1"]}]], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["C", "w"], " ", 
+       RowBox[{"(", 
+        RowBox[{"c", "-", 
+         SubscriptBox["n", "1"]}], ")"}]}], "+", 
+      RowBox[{"c", " ", 
+       OverscriptBox["\[Mu]", "~"], " ", 
+       SubscriptBox["R", "1"]}]}], ")"}], " ", 
+    SubscriptBox["\[Mu]", "1"]}], "-", 
+   RowBox[{
+    SuperscriptBox["\[ExponentialE]", 
+     RowBox[{"W", " ", 
+      SubscriptBox["\[Mu]", "2"]}]], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["C", "w"], " ", 
+       RowBox[{"(", 
+        RowBox[{"c", "-", 
+         SubscriptBox["n", "2"]}], ")"}]}], "+", 
+      RowBox[{"c", " ", 
+       OverscriptBox["\[Mu]", "~"], " ", 
+       SubscriptBox["R", "2"]}]}], ")"}], " ", 
+    SubscriptBox["\[Mu]", "2"]}]}], 
+  RowBox[{"c", " ", 
+   RowBox[{"(", 
+    RowBox[{
+     SuperscriptBox["\[ExponentialE]", 
+      RowBox[{"W", " ", 
+       SubscriptBox["\[Mu]", "1"]}]], "-", 
+     SuperscriptBox["\[ExponentialE]", 
+      RowBox[{"W", " ", 
+       SubscriptBox["\[Mu]", "2"]}]]}], ")"}], " ", 
+   OverscriptBox["\[Mu]", "~"]}]]], "Output",
+ CellChangeTimes->{
+  3.7053444988673687`*^9, {3.705344562431912*^9, 3.705344584058502*^9}, 
+   3.705345163925687*^9, 3.705355297468217*^9, 3.7053554945806017`*^9}],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{"-", "c"}], " ", 
+    OverscriptBox["\[Mu]", "~"], " ", 
+    SubscriptBox["P", "1"]}], "+", 
+   RowBox[{
+    SuperscriptBox["\[ExponentialE]", 
+     RowBox[{"W", " ", 
+      SubscriptBox["\[Mu]", "2"]}]], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["C", "w"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "c"}], "+", 
+         SubscriptBox["n", "2"]}], ")"}], " ", 
+       SubscriptBox["\[Mu]", "2"]}], "+", 
+      RowBox[{"c", " ", 
+       OverscriptBox["\[Mu]", "~"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         SubscriptBox["P", "1"], "-", 
+         RowBox[{
+          SubscriptBox["R", "2"], " ", 
+          SubscriptBox["\[Mu]", "2"]}]}], ")"}]}]}], ")"}]}]}], 
+  RowBox[{"c", " ", 
+   OverscriptBox["\[Mu]", "~"]}]]], "Output",
+ CellChangeTimes->{
+  3.7053444988673687`*^9, {3.705344562431912*^9, 3.705344584058502*^9}, 
+   3.705345163925687*^9, 3.705355297468217*^9, 3.7053554945858593`*^9}]
+}, Open  ]]
+},
+WindowSize->{808, 726},
+WindowMargins->{{-3, Automatic}, {Automatic, 0}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
+21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 270, 6, 32, "Input"],
+Cell[CellGroupData[{
+Cell[853, 30, 3745, 105, 163, "Input"],
+Cell[4601, 137, 615, 20, 52, "Output"],
+Cell[5219, 159, 615, 20, 52, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5871, 184, 2876, 90, 219, "Input"],
+Cell[8750, 276, 6627, 185, 176, "Output"],
+Cell[15380, 463, 1461, 41, 50, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16878, 509, 5101, 144, 289, "Input"],
+Cell[21982, 655, 1434, 45, 54, "Output"],
+Cell[23419, 702, 1020, 32, 50, "Output"]
+}, Open  ]]
+}
+]
+*)
+
