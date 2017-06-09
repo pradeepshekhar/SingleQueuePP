@@ -27,7 +27,7 @@ lambda_2 = lambda*exp(-mu*W);
 gamma = 0;
 
 % average service time
-mu_tilda = (mu_1*mu_2)/(gamma*mu_2 + (1-gamma)*mu_1);
+mu_tilde = (mu_1*mu_2)/(gamma*mu_2 + (1-gamma)*mu_1);
 
 %Traffic intensity
 rho = lambda/(c*mu);
@@ -90,32 +90,32 @@ for n1=n1_start:n1_start+n1_range
         %x=1;y=1;
         for z=1:10
             %note: gamma stabilizing after 10 iterations
-            [gamma, kappa, zeta] = findgamma(n1, n2, mu_tilda, lambda_1, lambda_2, c);
-            mu_tilda = (mu_1*mu_2)/(gamma*mu_2 + (1-gamma)*mu_1);
+            [gamma, kappa, zeta] = findgamma(n1, n2, mu_tilde, lambda_1, lambda_2, c);
+            mu_tilde = (mu_1*mu_2)/(gamma*mu_2 + (1-gamma)*mu_1);
             %disp(gamma);
         end
         
         %total utility
         utility_total(x,y) = 0;
         utility_1(x,y) = 0;
-        mu_tilda = (mu_1*mu_2)/(gamma*mu_2 + (1-gamma)*mu_1);
-        p_k_n_12 = findp_k_n_12(n1, n2, mu_tilda, lambda_1, lambda_2, c);
+        mu_tilde = (mu_1*mu_2)/(gamma*mu_2 + (1-gamma)*mu_1);
+        p_k_n_12 = findp_k_n_12(n1, n2, mu_tilde, lambda_1, lambda_2, c);
         
         
         % Keep track of these levels
         gamma_grid(x,y) = gamma;
         kappa_grid(x,y) = kappa;
         zeta_grid(x,y) = zeta;
-        mutilde_grid(x,y) = mu_tilda;
+        mutilde_grid(x,y) = mu_tilde;
         
         for i = 1:n1
-            alpha_1(i) = findalpha(i-1, users(type_1_idx), lot, mu_tilda);
+            alpha_1(i) = findalpha(i-1, users(type_1_idx), lot, mu_tilde);
         end
         
         % Calculate utility from type 1 and type 2 separately
         for i = 1:n1
             utility_1(x,y) = utility_1(x,y)+ p_k_n_12(i) * ...
-                findalpha(i-1, users(type_1_idx), lot, mu_tilda);
+                findalpha(i-1, users(type_1_idx), lot, mu_tilde);
         end
 %         utility_1(x,y) = utility_1(x,y) * gamma * lambda_1;
          utility_1(x,y) = utility_1(x,y) * lambda_1;
@@ -123,27 +123,27 @@ for n1=n1_start:n1_start+n1_range
 
         for i = 1:n2
             utility_2(x,y) = utility_2(x,y) +  p_k_n_12(i) * ...
-                findalpha(i-1, users(type_2_idx), lot, mu_tilda);
+                findalpha(i-1, users(type_2_idx), lot, mu_tilde);
         end
         %utility_2(x,y) = utility_2(x,y) * (1 - gamma) * lambda_2;
         utility_2(x,y) = utility_2(x,y) * lambda_2;
         
         utility_total(x,y) = utility_1(x,y) + utility_2(x,y);
         
-        [P1, P2] = findprices(n1, n2, c, R_1, R_2, P_w, W, mu_tilda, mu_1, mu_2);
+        [P1, P2] = findprices(n1, n2, c, R_1, R_2, P_w, W, mu_tilde, mu_1, mu_2);
         p1_grid(x,y) = P1;
         p2_grid(x,y) = P2;
         
         % Calculate utility together
 %         for i=1:n1
 %             utility_total(x,y)=utility_total(x,y)+gamma*(lambda_1)*(p_k_n_12(i))*...
-%                 (findalpha(i-1, users(type_1_idx), lot, mu_tilda)); 
+%                 (findalpha(i-1, users(type_1_idx), lot, mu_tilde)); 
 %         end
 %         utility_1(x,y) = utility_total(x,y)/gamma;
 %         
 %         for i=1:n2
 %             utility_total(x,y)=utility_total(x,y)+(1-gamma)*(lambda_2)*(p_k_n_12(i))*...
-%                 (findalpha(i-1, users(type_2_idx), lot, mu_tilda));
+%                 (findalpha(i-1, users(type_2_idx), lot, mu_tilde));
 %         end
 %         utility_2(x,y) = (utility_total(x,y)-utility_1(x,y))/(1-gamma);
         gamma=0;
@@ -151,7 +151,6 @@ for n1=n1_start:n1_start+n1_range
     end
 end
 
-%%
 
 [U_total_max] = max(utility_total(:));
 [row, col] = find(utility_total == U_total_max);
@@ -172,6 +171,31 @@ plot(p_k_n_12);
 [p1_grid(row,col), p2_grid(row,col)]
 pos_prices = (p1_grid > 0) & (p2_grid > 0);
 feas_util = utility_total .* pos_prices; 
+feas_util_max =  max(feas_util(:));
+
+%Finding feasible region for one price
+OnePrice_feas = zeros(n1_range+1, n2_range+1);
+for i=1:n1_range
+    for j=1:n2_range
+        if(pos_prices(i,j)==1)
+            n1 = n1_start+i-1;
+            n2 = n2_start+j-1;
+            %Check if there exists a P satisfying both the balking levels
+            if(((mu_1*R_1-mu_2*R_2)>(P_w/(c*mutilde_grid(i,j))*((mu_1*(n1-c))-(mu_2*(n2-c+1)))))&&((mu_2*R_2-mu_1*R_1)>(P_w/(c*mutilde_grid(i,j))*((mu_2*(n2-c))-(mu_1*(n1-c+1))))))
+                OnePrice_feas(i,j) = 1;
+            end
+        end
+    end
+end
+OnePriceUtil_feas = utility_total .* OnePrice_feas;
+OnePriceUtil_feas_max = max(OnePriceUtil_feas(:));
+[row, col] = find(utility_total == feas_util_max);
+U_1_feas_max = utility_1(row,col);
+U_2_feas_max = utility_2(row,col);
+n1_feas_max = n1_start+row-1;
+n2_feas_max = n2_start+col-1;
+P1_feas_max = p1_grid(row,col);
+P2_feas_max = p2_grid(row,col);
 
 figure(2); clf;
 subplot(2,1,1);
@@ -188,4 +212,14 @@ ylabel('type 1 balking rate');
 zlabel('utility');
 title('Utility for feasible balking rates');
 
+figure(3); clf
+mesh(feas_util); hold on
+mesh(OnePrice_feas .* 1500);
+xlabel('type 2 balking rate');
+ylabel('type 1 balking rate');
+zlabel('utility');
+title('Utility for feasible balking rates');
 
+figure(4); clf;
+mesh(p1_grid); hold on
+mesh(p2_grid);

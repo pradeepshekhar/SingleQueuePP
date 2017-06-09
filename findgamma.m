@@ -1,6 +1,6 @@
-function [gamma, kappa, zeta] = findgamma(n1, n2, mu_tilda, lambda_1, lambda_2, c)
+function [gamma, kappa, zeta] = findgamma(n1, n2, mu_tilde, lambda_1, lambda_2, c)
 
-p_k_n_12 = findp_k_n_12(n1, n2, mu_tilda, lambda_1, lambda_2, c);
+p_k_n_12 = findp_k_n_12(n1, n2, mu_tilde, lambda_1, lambda_2, c);
 
 kappa=0;
 for i = 1:n1
