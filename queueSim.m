@@ -4,7 +4,7 @@
 clear all;clc;
 
 %total no. of parking spots
-c=30;
+c=50;
 
 % service rate in single-type vehicles case. Value in Ratliff paper: 1/2
 mu = 1/2;
@@ -17,7 +17,7 @@ mu_1 = mu*(1-exp(-mu*W))/(1-exp(-mu*W)-mu*W*exp(-mu*W));
 mu_2 = mu/(1+mu*W);
 
 % Common arrival rate  (per hr)
-lambda = 60/5;
+lambda = 100/5;
 
 % arrival rate of type 1 and 2 vehicles
 lambda_1 = lambda*(1-exp(-mu*W)); 
@@ -62,10 +62,10 @@ kappa = 0;
 zeta = 0.8; 
 
 % desired balking levels of vehicles
-n1_start = 30;
-n2_start = 30;
-n1_range = 30;
-n2_range = 30;
+n1_start = c;
+n2_start = c;
+n1_range = 40;
+n2_range = 40;
 
 %Matrix to store utilities for all options of (n1,n2)
 utility_total = zeros(n1_range+1,n2_range+1);
@@ -158,20 +158,22 @@ U_1_max = utility_1(row,col);
 U_2_max = utility_2(row,col);
 n1_max = n1_start+row-1;
 n2_max = n2_start+col-1;
+
+%{
 figure(1);
 mesh(utility_total);
 xlabel('type 2 balking rate');
 ylabel('type 1 balking rate');
 zlabel('utility');
-%{
+
 figure(2);
 plot(p_k_n_12);
 %}
 
 [p1_grid(row,col), p2_grid(row,col)]
 pos_prices = (p1_grid > 0) & (p2_grid > 0);
-feas_util = utility_total .* pos_prices; 
-feas_util_max =  max(feas_util(:));
+util_feas = utility_total .* pos_prices; 
+util_feas_max =  max(util_feas(:));
 
 %Finding feasible region for one price
 OnePrice_feas = zeros(n1_range+1, n2_range+1);
@@ -187,9 +189,9 @@ for i=1:n1_range
         end
     end
 end
-OnePriceUtil_feas = utility_total .* OnePrice_feas;
-OnePriceUtil_feas_max = max(OnePriceUtil_feas(:));
-[row, col] = find(utility_total == feas_util_max);
+Util_feas_OnePrice = utility_total .* OnePrice_feas;
+Util_feas_OnePrice_max = max(Util_feas_OnePrice(:));
+[row, col] = find(utility_total == util_feas_max);
 U_1_feas_max = utility_1(row,col);
 U_2_feas_max = utility_2(row,col);
 n1_feas_max = n1_start+row-1;
@@ -206,15 +208,15 @@ zlabel('utility');
 title('Utility for all balking rates');
 
 subplot(2,1,2);
-mesh(feas_util);
+mesh(util_feas);
 xlabel('type 2 balking rate');
 ylabel('type 1 balking rate');
 zlabel('utility');
 title('Utility for feasible balking rates');
 
 figure(3); clf
-mesh(feas_util); hold on
-mesh(OnePrice_feas .* 1500);
+mesh(util_feas); hold on
+mesh(OnePrice_feas .* 2000);
 xlabel('type 2 balking rate');
 ylabel('type 1 balking rate');
 zlabel('utility');
